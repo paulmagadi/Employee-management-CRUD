@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-
+    // Export PDF
     document.getElementById("exportPdfBtn").addEventListener("click", function () {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
@@ -508,6 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
+    // Export Excel
     document.getElementById("exportExcelBtn").addEventListener("click", function () {
         let searchTerm = document.getElementById("search").value.toLowerCase();
         let filteredEmployees = employees.filter(emp =>
@@ -517,18 +518,14 @@ document.addEventListener('DOMContentLoaded', function () {
         );
 
         filteredEmployees = sortEmployees(filteredEmployees);
-
-        const paginatedData = paginate(filteredEmployees); // current page only
-        const startIndex = (currentPage - 1) * entriesPerPage;
-
+        
         const data = [
             ["#", "Name", "Position", "Salary (Ksh)", "Email"]
         ];
 
-        paginatedData.forEach((emp, index) => {
+        filteredEmployees.forEach((emp, index) => {
             data.push([
-                startIndex + index + 1,
-                index + 1, 
+                index + 1,
                 emp.fullName,
                 emp.position,
                 emp.salary,
@@ -538,10 +535,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const worksheet = XLSX.utils.aoa_to_sheet(data);
         const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Employees Page");
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Employees");
 
-        XLSX.writeFile(workbook, `employee-page-${currentPage}.xlsx`);
+        XLSX.writeFile(workbook, `employees.xlsx`);
     });
+
+
 
 
 
@@ -554,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("importFile").click();
     });
 
-    let lastImportedEmployees = []; // define this at the top of your script
+    let lastImportedEmployees = []; 
 
     document.getElementById("importFile").addEventListener("change", function () {
         const file = this.files[0];
@@ -584,7 +583,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 return null;
             }).filter(emp => emp);
 
-            // inside reader.onload
             lastImportedEmployees = newEmployees;
 
             employees = [...employees, ...newEmployees];
