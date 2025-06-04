@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script src="https://cdn.jsdelivr.net/gh/paulmagadi/cdn-resources/portfolio.min.js" defer></script>
+
     <link rel="stylesheet" href="main.css">
 </head>
 
@@ -40,7 +42,7 @@
                 <button id="addNewMemberBtn">New member</button>
 
                 <input type="file" id="importFile" accept=".csv" style="display: none;">
-                <button id="importBtn">Import CSV</button>
+                <button id="importBtn">Import CSV <i class="fa-solid fa-file-csv"></i></button>
             </div>
 
 
@@ -78,9 +80,9 @@
             
             <br>
             <div class="btn-group">
-                <button id="exportBtn">Export CSV</button>
-                <button id="exportPdfBtn">Export to PDF</button>
-                <button id="exportExcelBtn">Export to Excel</button>
+                <button id="exportBtn">Export CSV <i class="fa-solid fa-file-csv"></i></button>
+                <button id="exportPdfBtn">Export to PDF <i class="fa-solid fa-file-pdf"></i></button>
+                <button id="exportExcelBtn">Export to Excel <i class="fa-solid fa-file-excel"></i></button>
             </div>
 
         </section>
@@ -160,9 +162,8 @@
 
 
     <!-- Import Summary Modal -->
-    <!-- Import Summary Modal -->
-    <div id="importModal" class="modal hidden">
-        <div class="modal-content">
+    <div id="importModal" class="import-modal hidden">
+        <div class="import-modal-content">
             <span class="close-btn" id="closeImportModal">&times;</span>
             <h2>Import Summary</h2>
             <p id="importSummaryText"></p>
