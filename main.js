@@ -193,7 +193,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayEmployees() {
         const searchTerm = document.getElementById("search").value.toLowerCase();
         const tbody = document.getElementById("employeeTableBody");
+        const cardsContainer = document.getElementById("employeeCardsContainer");
+
         tbody.innerHTML = "";
+        cardsContainer.innerHTML = "";
 
         let filteredEmployees = employees.filter(emp => {
             return (
@@ -237,6 +240,29 @@ document.addEventListener('DOMContentLoaded', function () {
                     </td>
                 `;
                 tbody.appendChild(row);
+
+
+                // Card View (for mobile)
+                const card = document.createElement("div");
+                card.className = "employee-card";
+                card.innerHTML = `
+                    <div class="field"><span>#:</span> ${(currentPage - 1) * entriesPerPage + index + 1}</div>
+                    <div class="field"><span>Name:</span> ${emp.name}</div>
+                    <div class="field"><span>Age:</span> ${emp.age}</div>
+                    <div class="field"><span>County:</span> ${emp.county}</div>
+                    <div class="field"><span>Position:</span> ${emp.position}</div>
+                    <div class="field"><span>Salary:</span> Ksh${emp.salary}</div>
+                    <div class="field"><span>Start Date:</span> ${emp.startDate}</div>
+                    <div class="field"><span>Email:</span> ${emp.email}</div>
+                    <div class="field"><span>Phone:</span> ${emp.phone}</div>
+                    
+                    <div class="action-buttons">
+                        <button onclick="viewEmployee(${employees.indexOf(emp)})">View</button>
+                        <button onclick="editEmployee(${employees.indexOf(emp)})">Edit</button>
+                        <button onclick="deleteEmployee(${employees.indexOf(emp)})">Delete</button>
+                    </div>
+                `;
+                cardsContainer.appendChild(card);
             });
         }
 
