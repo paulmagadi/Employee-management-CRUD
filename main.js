@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${emp.age}</td>
                     <td>${emp.county}</td>
                     <td>${emp.position}</td>
-                    <td>$${emp.salary}</td>
+                    <td>Ksh${emp.salary}</td>
                     <td>${emp.startDate}</td>
                     <td>${emp.email}</td>
                     <td>${emp.phone}</td>
