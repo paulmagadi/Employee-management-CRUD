@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="main.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <nav class="topbar">
+            <h1>Employee Management</h1>
+        </nav>
+
+
+        <section class="employee-table-section">
+            <div class="filter-entries">
+                <div class="entries">
+                    Show <select name="" id="table_size">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select> entries
+                </div>
+                <div class="filter">
+                    <label for="search">Search:</label>
+                    <input type="search" name="" id="search" placeholder="Enter name/county/post">
+                </div>
+            </div>
+
+            <div class="add-member-btn">
+                <button id="addNewMemberBtn">New member</button>
+            </div>
+
+            <div class="employee-table">
+
+                <table id="employeeTable" class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Picture</th>
+                            <th data-sort="fullName">FullName<span class="sort-icon">▼</span></th>
+                            <th data-sort="age">Age<span class="sort-icon">▼</span></th>
+                            <th data-sort="county">County<span class="sort-icon">▼</span></th>
+                            <th data-sort="position">Position<span class="sort-icon">▼</span></th>
+                            <th data-sort="salary">Salary<span class="sort-icon">▼</span></th>
+                            <th data-sort="startDate">Start Date<span class="sort-icon">▼</span></th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="employee-table-body" id="employeeTableBody">
+
+                        <tr>
+                            <td>1</td>
+                            <td><img src="img/pic.jpg" alt="" width="40" height="40"></td>
+                            <td>John Doe</td>
+                            <td>30</td>
+                            <td>New York</td>
+                            <td>Software Engineer</td>
+                            <td>$80,000</td>
+                            <td>2023-01-15</td>
+                            <td>
+                                <a href="mailto:johndoe@gmail.com">johndoe@gmail.com</a>
+                            </td>
+                            <td>123-456-7890</td>
+                            <td class="action-buttons">
+                                <button class="view-btn"><i class="fa-regular fa-eye"></i></button>
+                                <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="tabe-pagination">
+                <div class="showing-entries" id="showingEntries">Showing 1 to 10 of X entries</div>
+                <div class="pagination" id="paginationControls"></div>
+            </div>
+            <br>
+            <button id="exportBtn">Export CSV</button>
+            <button id="exportPdfBtn">Export to PDF</button>
+            <button id="exportExcelBtn">Export to Excel</button>
+
+            <input type="file" id="importFile" accept=".csv" style="display: none;">
+            <button id="importBtn">Import CSV</button>
+
+        </section>
+
+        <br>
+        <footer>
+            <p>&copy; 2025 Employee Management. All rights reserved.</p>
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- Add New Member Modal -->
+    <div class="modal" id="addMemberModal" style="display: none;">
+        <div class="modal-content" style="background: white; padding: 20px; border: 1px solid #ccc;">
+            <span class="close" style="float: right; cursor: pointer;">&times;</span>
+            <h2>Add New Member</h2>
+            <form id="addMemberForm">
+                <div class="imageHolder">
+                    <label for="uploadImage" class="upload">
+                        <input type="file" id="uploadImage" class="imageInput" accept="image/*">
+                        <i class="fa-solid fa-plus"></i>
+                    </label>
+                    <img src="me.jpg" alt="" width="150" height="150" class="imagePreview">
+                </div>
+
+                <!-- Hidden field for base64 image -->
+                <input type="hidden" id="picture">
+
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" required>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" required>
+
+                <label for="county">County:</label>
+                <input type="text" id="county" required>
+
+                <label for="position">Position:</label>
+                <input type="text" id="position" required>
+
+                <label for="salary">Salary:</label>
+                <input type="number" id="salary" required>
+
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone">
+
+                <button type="submit" id="addEmployeeBtn">Add Member</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- View Employee Modal -->
+    <div class="modal" id="viewEmployeeModal" style="display: none;">
+        <div class="modal-content" style="background: white; padding: 20px; border: 1px solid #ccc;">
+            <span class="close-view" style="float: right; cursor: pointer;">&times;</span>
+            <h2>Employee Details</h2>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <img id="viewEmployeeImage" src="" width="150" height="150" alt="Employee Photo"
+                    style="border-radius: 8px;">
+                <div id="viewEmployeeDetails">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Import Summary Modal -->
+    <!-- Import Summary Modal -->
+    <div id="importModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" id="closeImportModal">&times;</span>
+            <h2>Import Summary</h2>
+            <p id="importSummaryText"></p>
+            <div class="import-preview-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>County</th>
+                        </tr>
+                    </thead>
+                    <tbody id="importedEmployeesList">
+                        <!-- Rows will be injected dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <button id="closeSummaryBtn">Close</button>
+            <button id="undoImportBtn" class="danger">Undo Import</button>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
