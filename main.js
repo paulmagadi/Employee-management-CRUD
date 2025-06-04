@@ -246,8 +246,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const card = document.createElement("div");
                 card.className = "employee-card";
                 card.innerHTML = `
-                    <div class="field"><span>#:</span> ${(currentPage - 1) * entriesPerPage + index + 1}</div>
-                    <div class="field"><span>Name:</span> ${emp.name}</div>
+                    <div class="field"><span></span> ${(currentPage - 1) * entriesPerPage + index + 1}</div>
+                    <div><img src="${emp.picture}" alt="Pic" width="40" height="40"></div>
+                    <div class="field"><span>Name:</span> ${emp.fullName}</div>
                     <div class="field"><span>Age:</span> ${emp.age}</div>
                     <div class="field"><span>County:</span> ${emp.county}</div>
                     <div class="field"><span>Position:</span> ${emp.position}</div>
